@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Happy Anniversary, Irmak</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --lavender: #e9d5ff;
+    --purple: #a855f7;
+    --vivid: #8b2fe0;
+    --grape: #6d28d9;
+    --deep: #4c1d95;
+    --cream: #faf6ff;
+    --soft: #f3e9ff;
+    --text: #3b2a5b;
+    --shadow: rgba(124, 58, 237, 0.28);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body { height: 100%; }
+
+  body {
+    font-family: 'Fredoka', sans-serif;
+    color: var(--text);
+    background: linear-gradient(160deg, var(--cream) 0%, var(--soft) 45%, var(--lavender) 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* floating confetti */
+  .confetti-layer {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .confetti {
+    position: absolute;
+    bottom: -40px;
+    width: 14px;
+    height: 14px;
+    opacity: 0;
+    animation: floatUp linear infinite;
+  }
+  @keyframes floatUp {
+    0%   { transform: translateY(0) scale(0.7) rotate(0deg); opacity: 0; }
+    10%  { opacity: 0.9; }
+    90%  { opacity: 0.7; }
+    100% { transform: translateY(-110vh) scale(1.1) rotate(420deg); opacity: 0; }
+  }
+
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .screen { display: none; animation: fadeIn 0.5s ease; }
+  .screen.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---- Welcome ---- */
+  .display {
+    font-family: 'Luckiest Guy', cursive;
+    color: var(--vivid);
+    line-height: 1.05;
+    letter-spacing: 1px;
+  }
+  .welcome h1 {
+    font-size: clamp(2.6rem, 8vw, 4.8rem);
+    text-align: center;
+    margin-bottom: 14px;
+    text-shadow: 4px 4px 0 var(--lavender), 8px 8px 0 rgba(168, 85, 247, 0.18);
+    transform: rotate(-2deg);
+  }
+  .welcome .sub {
+    text-align: center;
+    font-size: clamp(1rem, 3vw, 1.3rem);
+    font-weight: 600;
+    margin-bottom: 28px;
+    color: var(--grape);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  /* photo placeholder strip */
+  .photos {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 6px 0 30px;
+  }
+  .photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 22px;
+    background: #fff;
+    border: 3px dashed var(--purple);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--purple);
+    font-weight: 600;
+    padding: 10px;
+    box-shadow: 0 10px 24px var(--shadow);
+    transform: rotate(-4deg);
+  }
+  .photo:nth-child(2) { transform: rotate(3deg); }
+  .photo:nth-child(3) { transform: rotate(-1deg); }
+  .photo img { width: 100%; height: 100%; object-fit: cover; border-radius: 16px; }
+
+  .message-card {
+    background: rgba(255,255,255,0.75);
+    border: 1px solid var(--lavender);
+    border-radius: 22px;
+    padding: 22px 26px;
+    text-align: center;
+    font-size: 1.08rem;
+    line-height: 1.7;
+    font-weight: 500;
+    color: var(--text);
+    max-width: 620px;
+    margin: 0 auto 32px;
+    box-shadow: 0 8px 22px var(--shadow);
+  }
+
+  .center { text-align: center; }
+
+  .btn {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: #fff;
+    background: linear-gradient(135deg, var(--purple), var(--grape));
+    border: none;
+    padding: 16px 40px;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 8px 0 var(--deep), 0 14px 22px var(--shadow);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn:active { transform: translateY(5px); box-shadow: 0 3px 0 var(--deep), 0 6px 12px var(--shadow); }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: 0 8px 0 var(--deep); }
+
+  .btn.ghost {
+    background: #fff;
+    color: var(--grape);
+    box-shadow: 0 6px 0 var(--lavender);
+    border: 2px solid var(--purple);
+  }
+  .btn.ghost:active { box-shadow: 0 2px 0 var(--lavender); }
+
+  /* ---- Picker screens ---- */
+  .step-head { text-align: center; margin-bottom: 8px; }
+  .step-head h2 {
+    font-family: 'Luckiest Guy', cursive;
+    font-size: clamp(2rem, 6vw, 3.2rem);
+    color: var(--vivid);
+    letter-spacing: 1px;
+    transform: rotate(-1.5deg);
+    text-shadow: 3px 3px 0 var(--lavender);
+  }
+  .step-head p { color: var(--grape); font-weight: 600; margin-top: 8px; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.95rem; }
+
+  .progress {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin: 16px 0 26px;
+  }
+  .dot {
+    width: 12px; height: 12px; border-radius: 3px;
+    background: var(--lavender);
+    transition: all 0.3s ease;
+    transform: rotate(45deg);
+  }
+  .dot.on { background: var(--vivid); transform: rotate(45deg) scale(1.25); }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+    margin-bottom: 30px;
+  }
+  .card {
+    position: relative;
+    background: #fff;
+    border: 3px solid transparent;
+    border-radius: 22px;
+    padding: 26px 14px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 0 8px 18px rgba(124, 58, 237, 0.14);
+    user-select: none;
+  }
+  .card:hover { transform: translateY(-6px) rotate(-1deg); box-shadow: 0 16px 26px var(--shadow); }
+  .card .emoji { font-size: 3rem; display: block; margin-bottom: 10px; }
+  .card .label { font-weight: 600; font-size: 1.05rem; }
+  .card.selected {
+    border-color: var(--vivid);
+    background: linear-gradient(160deg, #fff, var(--soft));
+    transform: translateY(-6px) scale(1.03) rotate(-1deg);
+    box-shadow: 0 18px 30px var(--shadow);
+  }
+  .card.selected::after {
+    content: "✓";
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 30px;
+    height: 30px;
+    background: var(--vivid);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    box-shadow: 0 4px 10px var(--shadow);
+    animation: pop 0.25s ease;
+  }
+  @keyframes pop { from { transform: scale(0); } to { transform: scale(1); } }
+
+  .nav { display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+
+  /* ---- Summary ---- */
+  .summary-card {
+    background: #fff;
+    border-radius: 26px;
+    padding: 30px;
+    box-shadow: 0 14px 34px var(--shadow);
+    max-width: 560px;
+    margin: 0 auto 26px;
+    text-align: center;
+  }
+  .summary-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-size: 1.3rem;
+    font-weight: 600;
+    padding: 16px 0;
+  }
+  .summary-row .big { font-size: 2.2rem; }
+  .summary-row + .summary-row { border-top: 2px dashed var(--lavender); }
+  .summary-label { color: var(--grape); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; display: block; }
+
+  .err { color: var(--vivid); font-weight: 600; text-align: center; margin-bottom: 14px; min-height: 22px; }
+
+  /* ---- Thank you ---- */
+  .thanks { text-align: center; }
+  .thanks .badge {
+    font-family: 'Luckiest Guy', cursive;
+    font-size: clamp(3rem, 12vw, 6rem);
+    color: var(--purple);
+    display: inline-block;
+    animation: wiggle 0.7s ease-in-out infinite;
+    text-shadow: 4px 4px 0 var(--lavender);
+  }
+  @keyframes wiggle {
+    0%, 100% { transform: rotate(-6deg) scale(1); }
+    50% { transform: rotate(6deg) scale(1.08); }
+  }
+  .thanks h2 {
+    font-family: 'Luckiest Guy', cursive;
+    font-size: clamp(2.4rem, 7vw, 4rem);
+    color: var(--vivid);
+    margin: 10px 0 16px;
+    letter-spacing: 1px;
+    text-shadow: 3px 3px 0 var(--lavender);
+  }
+  .thanks p { font-size: 1.15rem; color: var(--grape); line-height: 1.7; font-weight: 500; }
+
+  .spinner {
+    width: 22px; height: 22px;
+    border: 3px solid rgba(255,255,255,0.5);
+    border-top-color: #fff;
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
+    animation: spin 0.7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ---- Countdown ---- */
+  .countdown {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin: 0 auto 30px;
+    flex-wrap: wrap;
+  }
+  .count-box {
+    background: #fff;
+    border-radius: 16px;
+    padding: 12px 16px;
+    min-width: 74px;
+    box-shadow: 0 8px 18px var(--shadow);
+  }
+  .count-num {
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 2rem;
+    color: var(--vivid);
+    line-height: 1;
+  }
+  .count-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--grape);
+    margin-top: 4px;
+  }
+  .countdown.today {
+    font-family: 'Luckiest Guy', cursive;
+    color: var(--vivid);
+    font-size: clamp(1.4rem, 5vw, 2.2rem);
+  }
+
+  /* ---- Note box ---- */
+  .note-wrap { max-width: 560px; margin: 0 auto 22px; }
+  .note-wrap label {
+    display: block;
+    font-weight: 600;
+    color: var(--grape);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.85rem;
+    text-align: center;
+  }
+  .note-wrap textarea {
+    width: 100%;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1rem;
+    color: var(--text);
+    border: 2px solid var(--lavender);
+    border-radius: 18px;
+    padding: 14px 16px;
+    resize: vertical;
+    min-height: 90px;
+    background: #fff;
+    box-shadow: 0 6px 16px rgba(124,58,237,0.1);
+  }
+  .note-wrap textarea:focus { outline: none; border-color: var(--purple); }
+
+  /* ---- Add your own ---- */
+  .add-own {
+    display: flex;
+    gap: 10px;
+    max-width: 520px;
+    margin: 0 auto 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .add-own input {
+    flex: 1 1 240px;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1rem;
+    color: var(--text);
+    border: 2px solid var(--lavender);
+    border-radius: 999px;
+    padding: 12px 18px;
+    background: #fff;
+    box-shadow: 0 6px 16px rgba(124,58,237,0.1);
+  }
+  .add-own input:focus { outline: none; border-color: var(--purple); }
+  .add-own .add-btn { padding: 12px 24px; font-size: 1rem; }
+
+  /* ---- Hidden music player ---- */
+  .yt-hidden { position: absolute; width: 1px; height: 1px; left: -9999px; top: -9999px; border: 0; }
+</style>
+</head>
+<body>
+  <div class="confetti-layer" id="confetti"></div>
+
+  <div class="wrap">
+
+    <!-- ===== SCREEN 1: WELCOME ===== -->
+    <section class="screen active welcome" id="screen-welcome">
+      <h1 class="display">Happy Anniversary,<br/>Irmak</h1>
+      <p class="sub">16th of June</p>
+
+      <!-- COUNTDOWN: auto-counts down toward 16 June -->
+      <div class="countdown" id="countdown"></div>
+
+      <!-- PHOTOS -->
+      <div class="photos">
+        <div class="photo"><img src="IMG_2373.jpeg" alt="Yankı &amp; Irmak" /></div>
+        <div class="photo"><img src="CCF6C557-A087-4874-9A11-9E271735B48A.JPG" alt="Yankı &amp; Irmak" /></div>
+        <div class="photo"><img src="IMG_0167.jpeg" alt="Yankı &amp; Irmak" /></div>
+      </div>
+
+      <!-- MESSAGE: edit the text below to whatever you want to say -->
+      <div class="message-card">
+        Alright Irmak, it's our anniversary and I'm officially putting YOU in charge.
+        Pick what we eat, pick what we do, and leave the rest of the chaos to me.
+        No wrong answers (well, maybe one or two).
+      </div>
+
+      <div class="center">
+        <button class="btn" onclick="go('food')">Let's plan this thing</button>
+        <div style="margin-top:16px">
+          <button class="btn ghost" onclick="surpriseMe()">Can't decide? Surprise me</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SCREEN 2: FOOD ===== -->
+    <section class="screen" id="screen-food">
+      <div class="step-head">
+        <h2>What are we eating?</h2>
+        <p>Pick whatever you're craving</p>
+      </div>
+      <div class="progress"><span class="dot on"></span><span class="dot"></span><span class="dot"></span></div>
+
+      <div class="cards" id="food-cards"></div>
+
+      <div class="nav">
+        <button class="btn ghost" onclick="go('welcome')">Back</button>
+        <button class="btn" id="food-next" disabled onclick="go('activity')">Next</button>
+      </div>
+    </section>
+
+    <!-- ===== SCREEN 3: ACTIVITY ===== -->
+    <section class="screen" id="screen-activity">
+      <div class="step-head">
+        <h2>And what are we doing?</h2>
+        <p>Pick as many as you want</p>
+      </div>
+      <div class="progress"><span class="dot on"></span><span class="dot on"></span><span class="dot"></span></div>
+
+      <div class="cards" id="activity-cards"></div>
+
+      <div class="add-own">
+        <input id="custom-activity" type="text" maxlength="40" placeholder="Got another idea? Type it here..." onkeydown="if(event.key==='Enter')addCustomActivity()" />
+        <button class="btn ghost add-btn" onclick="addCustomActivity()">Add it</button>
+      </div>
+
+      <div class="nav">
+        <button class="btn ghost" onclick="go('food')">Back</button>
+        <button class="btn" id="activity-next" disabled onclick="go('drink')">Next</button>
+      </div>
+    </section>
+
+    <!-- ===== SCREEN 3.5: DRINKS ===== -->
+    <section class="screen" id="screen-drink">
+      <div class="step-head">
+        <h2>What are we drinking?</h2>
+        <p>Pick something to cheers with</p>
+      </div>
+      <div class="progress"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></div>
+
+      <div class="cards" id="drink-cards"></div>
+
+      <div class="nav">
+        <button class="btn ghost" onclick="go('activity')">Back</button>
+        <button class="btn" id="drink-next" disabled onclick="go('summary')">See the plan</button>
+      </div>
+    </section>
+
+    <!-- ===== SCREEN 4: SUMMARY ===== -->
+    <section class="screen" id="screen-summary">
+      <div class="step-head">
+        <h2>The Master Plan</h2>
+        <p>If this looks right, fire it off to me</p>
+      </div>
+
+      <div class="summary-card">
+        <div class="summary-row">
+          <span class="big" id="sum-food-emoji"></span>
+          <div>
+            <span class="summary-label">We're eating</span>
+            <span id="sum-food-label">—</span>
+          </div>
+        </div>
+        <div class="summary-row">
+          <span class="big" id="sum-activity-emoji"></span>
+          <div>
+            <span class="summary-label">We're doing</span>
+            <span id="sum-activity-label">—</span>
+          </div>
+        </div>
+        <div class="summary-row">
+          <span class="big" id="sum-drink-emoji"></span>
+          <div>
+            <span class="summary-label">Drinks</span>
+            <span id="sum-drink-label">—</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="note-wrap">
+        <label for="note">Leave Yankı a little note (optional)</label>
+        <textarea id="note" placeholder="Write him something sweet, funny, or chaotic..."></textarea>
+      </div>
+
+      <div class="err" id="err"></div>
+
+      <div class="nav">
+        <button class="btn ghost" onclick="go('activity')">Change it</button>
+        <button class="btn" id="send-btn" onclick="submitPlan()">Send it to Yankı</button>
+      </div>
+    </section>
+
+    <!-- ===== SCREEN 5: THANK YOU ===== -->
+    <section class="screen thanks" id="screen-thanks">
+      <span class="badge">WOO!</span>
+      <h2>It's a date.</h2>
+      <p id="thanks-text">
+        Your picks just shot straight to Yankı's inbox.<br/>
+        Now get hyped — the 16th belongs to us.
+      </p>
+    </section>
+
+  </div>
+
+  <!-- MUSIC: "Yellow" by Coldplay via a hidden YouTube embed (auto-plays). Swap YT_ID in the script to change the song. -->
+  <iframe id="yt" class="yt-hidden" allow="autoplay" src=""></iframe>
+
+<script>
+  // ====== CONFIG ======
+  // 1. Go to https://web3forms.com  -> enter Yankı's email -> get a free Access Key.
+  // 2. Paste it between the quotes below. That's the only setup needed for email.
+  const WEB3FORMS_ACCESS_KEY = "YOUR_ACCESS_KEY_HERE";
+  const NOTIFY_EMAIL = "yanki.kirlikova@gmail.com";
+
+  // ====== OPTIONS ======
+  const FOODS = [
+    { id: "sushi",   emoji: "🍣", label: "Sushi" },
+    { id: "pizza",   emoji: "🍕", label: "Pizza" },
+    { id: "korean",  emoji: "🥩", label: "Korean Grill" },
+    { id: "noodles", emoji: "🍜", label: "Chinese Noodle Soup" },
+    { id: "burger",  emoji: "🍔", label: "Burger" },
+    { id: "picnic",  emoji: "🧺", label: "Picnic" },
+  ];
+  const ACTIVITIES = [
+    { id: "skating",  emoji: "⛸️", label: "Ice Skating" },
+    { id: "cinema",   emoji: "🎬", label: "Cinema" },
+    { id: "climbing", emoji: "🧗", label: "Climbing" },
+    { id: "pool",     emoji: "🎱", label: "8 Ball Pool" },
+    { id: "atari",    emoji: "👾", label: "Atari Game Center" },
+    { id: "bowling",  emoji: "🎳", label: "Bowling" },
+    { id: "bolehill", emoji: "🌳", label: "Bole Hill" },
+    { id: "evdefilm", emoji: "🛋️", label: "Evde Film" },
+    { id: "spa",      emoji: "🧖", label: "Going to SPA" },
+    { id: "tennis",   emoji: "🎾", label: "Playing Tennis" },
+  ];
+  const DRINKS = [
+    { id: "beer",      emoji: "🍺", label: "Beer" },
+    { id: "whitewine", emoji: "🥂", label: "White Wine" },
+    { id: "gintonic",  emoji: "🍸", label: "Gin & Tonic" },
+    { id: "cocktail",  emoji: "🍹", label: "Cocktail" },
+  ];
+
+  const choice = { food: null, activity: [], drink: null };
+  const cardEls = { food: {}, activity: {}, drink: {} };
+  const nextBtnFor = { food: "food-next", activity: "activity-next", drink: "drink-next" };
+
+  // ====== RENDER CARDS ======
+  function selectChoice(type, item) {
+    // Activities are multi-select: clicking toggles each one on/off.
+    if (type === "activity") {
+      const i = choice.activity.findIndex(a => a.id === item.id);
+      if (i >= 0) {
+        choice.activity.splice(i, 1);
+        cardEls.activity[item.id]?.classList.remove("selected");
+      } else {
+        choice.activity.push(item);
+        cardEls.activity[item.id]?.classList.add("selected");
+      }
+      document.getElementById("activity-next").disabled = choice.activity.length === 0;
+      return;
+    }
+    // Food and drink are single-select.
+    choice[type] = item;
+    Object.values(cardEls[type]).forEach(el => el.classList.remove("selected"));
+    if (cardEls[type][item.id]) cardEls[type][item.id].classList.add("selected");
+    document.getElementById(nextBtnFor[type]).disabled = false;
+  }
+
+  function makeCard(item, type, container) {
+    const el = document.createElement("div");
+    el.className = "card";
+    const em = document.createElement("span"); em.className = "emoji"; em.textContent = item.emoji;
+    const lb = document.createElement("span"); lb.className = "label"; lb.textContent = item.label;
+    el.append(em, lb);
+    el.onclick = () => selectChoice(type, item);
+    cardEls[type][item.id] = el;
+    container.appendChild(el);
+    return el;
+  }
+  function renderCards(containerId, items, type) {
+    const c = document.getElementById(containerId);
+    items.forEach(item => makeCard(item, type, c));
+  }
+  renderCards("food-cards", FOODS, "food");
+  renderCards("activity-cards", ACTIVITIES, "activity");
+  renderCards("drink-cards", DRINKS, "drink");
+
+  // ====== ADD YOUR OWN ACTIVITY ======
+  let customCount = 0;
+  function addCustomActivity() {
+    const input = document.getElementById("custom-activity");
+    const val = input.value.trim();
+    if (!val) return;
+    customCount++;
+    const item = { id: "custom-" + customCount, emoji: "⭐", label: val };
+    ACTIVITIES.push(item);
+    makeCard(item, "activity", document.getElementById("activity-cards"));
+    selectChoice("activity", item);
+    input.value = "";
+  }
+
+  // ====== SURPRISE ME ======
+  function surpriseMe() {
+    const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+    selectChoice("food", pick(FOODS));
+    // Clear any selected activities, then pick 1-2 random ones.
+    choice.activity.slice().forEach(a => selectChoice("activity", a));
+    const chosen = new Set();
+    const count = 1 + Math.floor(Math.random() * 2);
+    while (chosen.size < count) chosen.add(pick(ACTIVITIES));
+    chosen.forEach(a => selectChoice("activity", a));
+    selectChoice("drink", pick(DRINKS));
+    go("summary");
+  }
+
+  // ====== NAVIGATION ======
+  function go(name) {
+    if (name === "summary") updateSummary();
+    document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+    document.getElementById("screen-" + name).classList.add("active");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function updateSummary() {
+    if (choice.food) {
+      document.getElementById("sum-food-emoji").textContent = choice.food.emoji;
+      document.getElementById("sum-food-label").textContent = choice.food.label;
+    }
+    if (choice.activity.length) {
+      document.getElementById("sum-activity-emoji").textContent = choice.activity.map(a => a.emoji).join(" ");
+      document.getElementById("sum-activity-label").textContent = choice.activity.map(a => a.label).join(", ");
+    }
+    if (choice.drink) {
+      document.getElementById("sum-drink-emoji").textContent = choice.drink.emoji;
+      document.getElementById("sum-drink-label").textContent = choice.drink.label;
+    }
+  }
+
+  // ====== SUBMIT ======
+  async function submitPlan() {
+    const btn = document.getElementById("send-btn");
+    const err = document.getElementById("err");
+    err.textContent = "";
+
+    if (!choice.food || !choice.activity.length || !choice.drink) {
+      err.textContent = "Pick a food, at least one activity and a drink first!";
+      return;
+    }
+
+    const note = document.getElementById("note").value.trim();
+
+    if (WEB3FORMS_ACCESS_KEY === "YOUR_ACCESS_KEY_HERE") {
+      // No key set yet — still let it feel complete during testing.
+      err.textContent = "Email key not set yet (Yankı: add your Web3Forms key). Showing the plan anyway.";
+      go("thanks");
+      return;
+    }
+
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Sending...';
+
+    const payload = {
+      access_key: WEB3FORMS_ACCESS_KEY,
+      from_name: "Irmak",
+      subject: "Irmak picked the anniversary plan!",
+      to: NOTIFY_EMAIL,
+      "Food choice": `${choice.food.emoji} ${choice.food.label}`,
+      "Activity choice": choice.activity.map(a => `${a.emoji} ${a.label}`).join(", "),
+      "Drink": `${choice.drink.emoji} ${choice.drink.label}`,
+      "Note from Irmak": note || "(no note)",
+      message: `Irmak's anniversary picks:\n\nFood: ${choice.food.label}\nActivities: ${choice.activity.map(a => a.label).join(", ")}\nDrink: ${choice.drink.label}\n\nNote: ${note || "(none)"}`,
+    };
+
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      if (data.success) {
+        go("thanks");
+      } else {
+        throw new Error(data.message || "Failed to send");
+      }
+    } catch (e) {
+      err.textContent = "Hmm, couldn't send it — check the internet and try again.";
+      btn.disabled = false;
+      btn.innerHTML = "Send it to Yankı";
+    }
+  }
+
+  // ====== FLOATING CONFETTI ======
+  (function spawnConfetti() {
+    const layer = document.getElementById("confetti");
+    const colors = ["#a855f7", "#7c3aed", "#c084fc", "#d8b4fe", "#9333ea", "#6d28d9"];
+    for (let i = 0; i < 22; i++) {
+      const c = document.createElement("span");
+      c.className = "confetti";
+      const size = 8 + Math.random() * 14;
+      c.style.left = Math.random() * 100 + "vw";
+      c.style.width = size + "px";
+      c.style.height = size + "px";
+      c.style.background = colors[Math.floor(Math.random() * colors.length)];
+      c.style.borderRadius = Math.random() > 0.5 ? "50%" : "3px";
+      c.style.animationDuration = 7 + Math.random() * 9 + "s";
+      c.style.animationDelay = Math.random() * 8 + "s";
+      layer.appendChild(c);
+    }
+  })();
+
+  // ====== COUNTDOWN to 16 June ======
+  (function countdown() {
+    const el = document.getElementById("countdown");
+    const target = new Date("2026-06-16T00:00:00");
+    function tick() {
+      let diff = target - new Date();
+      if (diff <= 0) {
+        el.classList.add("today");
+        el.innerHTML = "It's today — Happy Anniversary!";
+        return;
+      }
+      const d = Math.floor(diff / 86400000); diff -= d * 86400000;
+      const h = Math.floor(diff / 3600000);  diff -= h * 3600000;
+      const m = Math.floor(diff / 60000);    diff -= m * 60000;
+      const s = Math.floor(diff / 1000);
+      const box = (n, l) => `<div class="count-box"><div class="count-num">${n}</div><div class="count-label">${l}</div></div>`;
+      el.innerHTML = box(d, "days") + box(h, "hrs") + box(m, "min") + box(s, "sec");
+    }
+    tick();
+    setInterval(tick, 1000);
+  })();
+
+  // ====== MUSIC: "Yellow" by Coldplay (auto-plays) ======
+  const YT_ID = "yKNxeF4KMsY"; // Coldplay - Yellow (official video)
+  function startMusic() {
+    const yt = document.getElementById("yt");
+    if (yt.dataset.started) return;
+    yt.dataset.started = "1";
+    yt.src = `https://www.youtube.com/embed/${YT_ID}?autoplay=1&loop=1&playlist=${YT_ID}`;
+  }
+  // Try immediately; browsers that block autoplay-with-sound will start it
+  // on Irmak's very first tap/click instead.
+  startMusic();
+  ["pointerdown", "keydown", "touchstart"].forEach(ev =>
+    window.addEventListener(ev, startMusic, { once: true }));
+</script>
+</body>
+</html>

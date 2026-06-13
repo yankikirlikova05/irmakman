@@ -1,0 +1,19 @@
+const http = require("http");
+const fs = require("fs");
+const path = require("path");
+
+const ROOT = "/Users/yankikirlikova/Desktop/irmakman";
+const PORT = 4321;
+const TYPES = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript", ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".gif": "image/gif", ".svg": "image/svg+xml" };
+
+http.createServer((req, res) => {
+  let rel = decodeURIComponent(req.url.split("?")[0]);
+  if (rel === "/") rel = "/index.html";
+  const filePath = path.join(ROOT, rel);
+  if (!filePath.startsWith(ROOT)) { res.writeHead(403); return res.end("forbidden"); }
+  fs.readFile(filePath, (err, data) => {
+    if (err) { res.writeHead(404); return res.end("not found"); }
+    res.writeHead(200, { "Content-Type": TYPES[path.extname(filePath).toLowerCase()] || "application/octet-stream" });
+    res.end(data);
+  });
+}).listen(PORT, () => console.log("serving on " + PORT));
