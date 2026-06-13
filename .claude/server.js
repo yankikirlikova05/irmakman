@@ -4,7 +4,7 @@ const path = require("path");
 
 const ROOT = "/Users/yankikirlikova/Desktop/irmakman";
 const PORT = 4321;
-const TYPES = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript", ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".gif": "image/gif", ".svg": "image/svg+xml" };
+const TYPES = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript", ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".gif": "image/gif", ".svg": "image/svg+xml", ".mp3": "audio/mpeg" };
 
 http.createServer((req, res) => {
   let rel = decodeURIComponent(req.url.split("?")[0]);

@@ -33,29 +33,6 @@
     position: relative;
   }
 
-  /* floating confetti */
-  .confetti-layer {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 0;
-  }
-  .confetti {
-    position: absolute;
-    bottom: -40px;
-    width: 14px;
-    height: 14px;
-    opacity: 0;
-    animation: floatUp linear infinite;
-  }
-  @keyframes floatUp {
-    0%   { transform: translateY(0) scale(0.7) rotate(0deg); opacity: 0; }
-    10%  { opacity: 0.9; }
-    90%  { opacity: 0.7; }
-    100% { transform: translateY(-110vh) scale(1.1) rotate(420deg); opacity: 0; }
-  }
-
   .wrap {
     position: relative;
     z-index: 1;
@@ -390,13 +367,9 @@
   .add-own input:focus { outline: none; border-color: var(--purple); }
   .add-own .add-btn { padding: 12px 24px; font-size: 1rem; }
 
-  /* ---- Hidden music player ---- */
-  .yt-hidden { position: absolute; width: 1px; height: 1px; left: -9999px; top: -9999px; border: 0; }
 </style>
 </head>
 <body>
-  <div class="confetti-layer" id="confetti"></div>
-
   <div class="wrap">
 
     <!-- ===== SCREEN 1: WELCOME ===== -->
@@ -416,9 +389,8 @@
 
       <!-- MESSAGE: edit the text below to whatever you want to say -->
       <div class="message-card">
-        Alright Irmak, it's our anniversary and I'm officially putting YOU in charge.
-        Pick what we eat, pick what we do, and leave the rest of the chaos to me.
-        No wrong answers (well, maybe one or two).
+        Irmak bebegim biliyorsun ki cok yakinda cok onemli bir gun yaklasiyor. Gecen sene bugunler oldukca yogun aktiviteler icindeydik.
+        Ilk yildonumumuzu kutlamak ve bunu birlikte planlamak amaciyla bu websitesi ortaya cikmis bulunmaktadir.
       </div>
 
       <div class="center">
@@ -486,7 +458,7 @@
     <section class="screen" id="screen-summary">
       <div class="step-head">
         <h2>The Master Plan</h2>
-        <p>If this looks right, fire it off to me</p>
+        <p>Ne dedin guzel mi?</p>
       </div>
 
       <div class="summary-card">
@@ -513,16 +485,10 @@
         </div>
       </div>
 
-      <div class="note-wrap">
-        <label for="note">Leave Yankı a little note (optional)</label>
-        <textarea id="note" placeholder="Write him something sweet, funny, or chaotic..."></textarea>
-      </div>
-
       <div class="err" id="err"></div>
 
       <div class="nav">
         <button class="btn ghost" onclick="go('activity')">Change it</button>
-        <button class="btn" id="send-btn" onclick="submitPlan()">Send it to Yankı</button>
       </div>
     </section>
 
@@ -538,8 +504,8 @@
 
   </div>
 
-  <!-- MUSIC: "Yellow" by Coldplay via a hidden YouTube embed (auto-plays). Swap YT_ID in the script to change the song. -->
-  <iframe id="yt" class="yt-hidden" allow="autoplay" src=""></iframe>
+  <!-- MUSIC: "Yellow" by Coldplay, self-hosted. Replace yellow.mp3 to change the song. -->
+  <audio id="song" src="yellow.mp3" loop preload="auto"></audio>
 
 <script>
   // ====== CONFIG ======
@@ -726,25 +692,6 @@
     }
   }
 
-  // ====== FLOATING CONFETTI ======
-  (function spawnConfetti() {
-    const layer = document.getElementById("confetti");
-    const colors = ["#a855f7", "#7c3aed", "#c084fc", "#d8b4fe", "#9333ea", "#6d28d9"];
-    for (let i = 0; i < 22; i++) {
-      const c = document.createElement("span");
-      c.className = "confetti";
-      const size = 8 + Math.random() * 14;
-      c.style.left = Math.random() * 100 + "vw";
-      c.style.width = size + "px";
-      c.style.height = size + "px";
-      c.style.background = colors[Math.floor(Math.random() * colors.length)];
-      c.style.borderRadius = Math.random() > 0.5 ? "50%" : "3px";
-      c.style.animationDuration = 7 + Math.random() * 9 + "s";
-      c.style.animationDelay = Math.random() * 8 + "s";
-      layer.appendChild(c);
-    }
-  })();
-
   // ====== COUNTDOWN to 16 June ======
   (function countdown() {
     const el = document.getElementById("countdown");
@@ -767,13 +714,13 @@
     setInterval(tick, 1000);
   })();
 
-  // ====== MUSIC: "Yellow" by Coldplay (auto-plays) ======
-  const YT_ID = "yKNxeF4KMsY"; // Coldplay - Yellow (official video)
+  // ====== MUSIC: "Yellow" by Coldplay (self-hosted yellow.mp3, auto-plays) ======
   function startMusic() {
-    const yt = document.getElementById("yt");
-    if (yt.dataset.started) return;
-    yt.dataset.started = "1";
-    yt.src = `https://www.youtube.com/embed/${YT_ID}?autoplay=1&loop=1&playlist=${YT_ID}`;
+    const song = document.getElementById("song");
+    if (song.dataset.started) return;
+    const p = song.play();
+    if (p && p.then) p.then(() => { song.dataset.started = "1"; }).catch(() => {});
+    else song.dataset.started = "1";
   }
   // Try immediately; browsers that block autoplay-with-sound will start it
   // on Irmak's very first tap/click instead.
