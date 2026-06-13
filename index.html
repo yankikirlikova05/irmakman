@@ -22,14 +22,13 @@
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  html { height: 100%; }
+  html, body { height: 100%; }
 
   body {
     font-family: 'Fredoka', sans-serif;
     color: var(--text);
     background: linear-gradient(160deg, var(--cream) 0%, var(--soft) 45%, var(--lavender) 100%);
-    background-attachment: fixed;
-    min-height: 100vh;
+    min-height: 200vh;
     overflow-x: hidden;
     position: relative;
   }
@@ -40,7 +39,7 @@
     max-width: 900px;
     margin: 0 auto;
     padding: 40px 20px 80px;
-    min-height: 100vh;
+    min-height: 200vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -368,6 +367,8 @@
   .add-own input:focus { outline: none; border-color: var(--purple); }
   .add-own .add-btn { padding: 12px 24px; font-size: 1rem; }
 
+  /* ---- Hidden music player ---- */
+  .yt-hidden { position: absolute; width: 1px; height: 1px; left: -9999px; top: -9999px; border: 0; }
 </style>
 </head>
 <body>
@@ -395,9 +396,9 @@
       </div>
 
       <div class="center">
-        <button class="btn" onclick="go('food')">Let's plan this thing</button>
+        <button class="btn" onclick="go('food')">DEVAM</button>
         <div style="margin-top:16px">
-          <button class="btn ghost" onclick="surpriseMe()">Can't decide? Surprise me</button>
+          <button class="btn ghost" onclick="surpriseMe()">Surpriz Secenek</button>
         </div>
       </div>
     </section>
@@ -405,8 +406,7 @@
     <!-- ===== SCREEN 2: FOOD ===== -->
     <section class="screen" id="screen-food">
       <div class="step-head">
-        <h2>What are we eating?</h2>
-        <p>Pick whatever you're craving</p>
+        <h2>Ne yemek istersin?</h2>
       </div>
       <div class="progress"><span class="dot on"></span><span class="dot"></span><span class="dot"></span></div>
 
@@ -421,8 +421,8 @@
     <!-- ===== SCREEN 3: ACTIVITY ===== -->
     <section class="screen" id="screen-activity">
       <div class="step-head">
-        <h2>And what are we doing?</h2>
-        <p>Pick as many as you want</p>
+        <h2>Ne yapmak istersin????</h2>
+        <p>(Birden fazla secebilirsin)</p>
       </div>
       <div class="progress"><span class="dot on"></span><span class="dot on"></span><span class="dot"></span></div>
 
@@ -486,26 +486,19 @@
         </div>
       </div>
 
-      <div class="note-wrap">
-        <label for="note">Leave Yankı a little note (optional)</label>
-        <textarea id="note" placeholder="Write him something sweet, funny, or chaotic..."></textarea>
-      </div>
-
       <div class="err" id="err"></div>
 
       <div class="nav">
         <button class="btn ghost" onclick="go('activity')">Change it</button>
-        <button class="btn" id="send-btn" onclick="submitPlan()">Send it to Yankı</button>
       </div>
     </section>
 
     <!-- ===== SCREEN 5: THANK YOU ===== -->
     <section class="screen thanks" id="screen-thanks">
       <span class="badge">WOO!</span>
-      <h2>It's a date.</h2>
+      <h2>ANLASTIK, 16sinda goruselim musaitsen</h2>
       <p id="thanks-text">
-        Your picks just shot straight to Yankı's inbox.<br/>
-        Now get hyped — the 16th belongs to us.
+        Simdi bana mail gelmis olmasi lazim<br/>
       </p>
     </section>
 
@@ -518,7 +511,7 @@
   // ====== CONFIG ======
   // 1. Go to https://web3forms.com  -> enter Yankı's email -> get a free Access Key.
   // 2. Paste it between the quotes below. That's the only setup needed for email.
-  const WEB3FORMS_ACCESS_KEY = "d6420c0e-335f-40e7-ac6f-b5b7c80a74f0";
+  const WEB3FORMS_ACCESS_KEY = "YOUR_ACCESS_KEY_HERE";
   const NOTIFY_EMAIL = "yanki.kirlikova@gmail.com";
 
   // ====== OPTIONS ======
@@ -526,7 +519,7 @@
     { id: "sushi",   emoji: "🍣", label: "Sushi" },
     { id: "pizza",   emoji: "🍕", label: "Pizza" },
     { id: "korean",  emoji: "🥩", label: "Korean Grill" },
-    { id: "noodles", emoji: "🍜", label: "Chinese Noodle Soup" },
+    { id: "noodles", emoji: "🍜", label: "CinCor" },
     { id: "burger",  emoji: "🍔", label: "Burger" },
     { id: "picnic",  emoji: "🧺", label: "Picnic" },
   ];
