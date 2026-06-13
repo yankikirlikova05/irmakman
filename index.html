@@ -22,12 +22,13 @@
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  html, body { height: 100%; }
+  html { height: 100%; }
 
   body {
     font-family: 'Fredoka', sans-serif;
     color: var(--text);
     background: linear-gradient(160deg, var(--cream) 0%, var(--soft) 45%, var(--lavender) 100%);
+    background-attachment: fixed;
     min-height: 100vh;
     overflow-x: hidden;
     position: relative;
@@ -486,10 +487,16 @@
         </div>
       </div>
 
+      <div class="note-wrap">
+        <label for="note">Leave Yankı a little note (optional)</label>
+        <textarea id="note" placeholder="Write him something sweet, funny, or chaotic..."></textarea>
+      </div>
+
       <div class="err" id="err"></div>
 
       <div class="nav">
         <button class="btn ghost" onclick="go('activity')">Change it</button>
+        <button class="btn" id="send-btn" onclick="submitPlan()">Send it to Yankı</button>
       </div>
     </section>
 
@@ -511,7 +518,7 @@
   // ====== CONFIG ======
   // 1. Go to https://web3forms.com  -> enter Yankı's email -> get a free Access Key.
   // 2. Paste it between the quotes below. That's the only setup needed for email.
-  const WEB3FORMS_ACCESS_KEY = "YOUR_ACCESS_KEY_HERE";
+  const WEB3FORMS_ACCESS_KEY = "d6420c0e-335f-40e7-ac6f-b5b7c80a74f0";
   const NOTIFY_EMAIL = "yanki.kirlikova@gmail.com";
 
   // ====== OPTIONS ======
